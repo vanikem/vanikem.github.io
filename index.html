@@ -1,13 +1,15 @@
 <html>
 <head>
 
+    <meta content="width=device-width,initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport" />
 </head>
 
 <body>
 <div id="gift-list">
 	<input id="gift-name" type="text">
-	<a href="javascript:void(0)" class="btn" onclick="return addGift()">Thêm</a>
-	<a href="javascript:void(0)" class="btn" onclick="return displayGift()">OK Show Quà</a>
+	<a href="javascript:void(0)" class="btn" onclick="return addGift()">Thêm</a>	
+	<a href="javascript:void(0)" class="btn" onclick="return shuffleGift()">Tráo quà</a>
+	<a href="javascript:void(0)" class="btn" onclick="return displayGift()">Xong</a>
 </div>
 <ul id="gift-display">
 
@@ -17,6 +19,37 @@ function displayGift(){
 document.querySelector('#gift-display').className+=' prepared';
 document.querySelector('#gift-list').className+=' prepared';
 }
+function shuffle(elems) {
+ 
+    allElems = (function(){
+	var ret = [], l = elems.length;
+	while (l--) { ret[ret.length] = elems[l]; }
+	return ret;
+    })();
+ 
+    var shuffled = (function(){
+        var l = allElems.length, ret = [];
+        while (l--) {
+            var random = Math.floor(Math.random() * allElems.length),
+                randEl = allElems[random].cloneNode(true);
+            allElems.splice(random, 1);
+            ret[ret.length] = randEl;
+        }
+        return ret; 
+    })(), l = elems.length;
+ 
+    while (l--) {
+        elems[l].parentNode.insertBefore(shuffled[l], elems[l].nextSibling);
+        elems[l].parentNode.removeChild(elems[l]);
+    }
+ 
+}
+
+function shuffleGift(){
+shuffle( document.getElementsByTagName('li') );
+}
+
+
 function addGift(){
 var gift_content = document.querySelector('#gift-name').value;
 document.querySelector('#gift-display').innerHTML+='<li class="gift" onclick="return openGift(this)"><span>'+gift_content+'</span></li>';
