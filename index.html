@@ -52,7 +52,12 @@ shuffle( document.getElementsByTagName('li') );
 
 function addGift(){
 var gift_content = document.querySelector('#gift-name').value;
-document.querySelector('#gift-display').innerHTML+='<li class="gift" onclick="return openGift(this)"><span>'+gift_content+'</span></li>';
+document.querySelector('#gift-display').innerHTML+='<li class="gift" onclick="return openGift(this)"><span>'+gift_content+'</span><a class="btn" href="javascript:void(0)" onclick="return removeGift(this)">Xóa</a></li>';
+}
+function removeGift(el){
+el.parentNode.remove();
+event.stopPropagation()
+return false;
 }
 function openGift(el){
 var audio = new Audio('gift.mp3');
@@ -78,6 +83,14 @@ padding:10px;
 #gift-list.prepared{
 display:none;
 }
+.prepared .btn{
+display:none;
+}
+.gift .btn{
+position:relative;
+z-index:9999;
+}
+
 .anim{
 	animation: shake 0.5s;
 
